@@ -46,4 +46,12 @@ app.use("/interract",interractRoutes)
 app.use("/delete",deleteRoute)
 app.use("/account",manageAccountRoute)
 
+// Start server locally if run directly
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+  });
+}
+
 export default app
