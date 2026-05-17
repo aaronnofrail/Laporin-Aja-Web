@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import Navbar from './container/navbar/main_navbar';
 import { Routes , Route } from 'react-router-dom';
 
@@ -10,10 +10,16 @@ import Login from './pages/accounts/login-page';
 import Register from './pages/accounts/register-page';
 import About_page from './pages/about_page/about_page';
 import ProfilePage from './pages/accounts/profile-page';
+import Header from './container/header/header';
 
 function App() {
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+  }, []);
   return (
     <>
+      <Header />
       <Routes>
         <Route path='/' element={<Landing_page/>}/>
         <Route path='/Reports' element={<Reports/>}/>

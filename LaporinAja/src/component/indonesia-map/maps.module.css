@@ -1,23 +1,24 @@
-.content{
+.content {
   width: 100%;
 }
 
-svg{
+svg {
   width: 100%;
 }
 
 path {
-  fill: #02203c;      
-  stroke: #ffffff;
-  opacity: 1;    
-  stroke-width: 0.5px; 
+  fill: var(--primary);      
+  stroke: var(--bg-color);
+  opacity: 0.8;    
+  stroke-width: 0.8px; 
   cursor: pointer;
-  transition: 200ms;
+  transition: var(--transition);
 }
 
 path:hover {    
-  opacity: 0.9 !important;   
+  fill: var(--primary-hover);
+  opacity: 1 !important;   
   z-index: 100;
   cursor: pointer;   
-  transition: 200ms;
+  filter: drop-shadow(0 0 8px var(--primary-glow));
 }

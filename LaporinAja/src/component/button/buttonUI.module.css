@@ -1,17 +1,32 @@
-.buttonUI{
-    height: 50px;
-    font-family: Arial, Helvetica, sans-serif;
-    font-weight: 500;
-    font-size: large;
+.buttonUI {
+    height: 48px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
 }
 
-#Rounded_button{
-    /* background-color: rgb(0, 138, 212); */
-    background-color: rgb(55, 149, 200);
+#Rounded_button {
+    background-color: var(--primary);
     border: none;
-    border-radius: 40px;
-    color: aliceblue;
-    padding-left: 20px;
-    padding-right: 20px;
-    margin-right: 10px;
+    border-radius: 24px;
+    color: #ffffff;
+    padding: 0 24px;
+    margin-right: 12px;
+    box-shadow: 0 4px 12px var(--primary-glow);
+}
+
+#Rounded_button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.4);
+    background-color: var(--primary-hover);
+}
+
+#Rounded_button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }

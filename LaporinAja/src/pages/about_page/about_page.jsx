@@ -1,6 +1,4 @@
 import { Link, Route , Routes } from "react-router-dom";
-//import navbar dan header
-import Header from "../../container/header/header";
 import styles from "./about_page.module.css";
 
 
@@ -8,7 +6,6 @@ function About_page(){
     return(
         <>
          <div className={styles.container}>
-            <Header/>
             <div className={styles.layout}>
                 <div className={styles.content}>
                     <div className={styles.mainSection}>

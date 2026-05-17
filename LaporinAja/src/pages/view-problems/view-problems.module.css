@@ -3,21 +3,24 @@
   min-height: 100vh;
   width: 100%;
   flex: 1;
-  margin-top: 55px;
+  padding-top: 64px;
 }
 
 .content {
-  margin-left: 200px;
+  margin-left: 240px; /* Match new navbar width */
   flex: 1;
-  padding: 10px;
+  padding: 30px;
   width: 100%;
-  height: calc(100vh - 75px);
+  height: 100vh;
   overflow-y: auto;
+  background-color: transparent; /* Rely on global bg */
 }
 
-@media screen and (max-width:900px) {
-  .content{
-    margin-left: 0px;
-    margin-top: 40px;
+@media screen and (max-width: 900px) {
+  .content {
+    margin-left: 0;
+    margin-top: 64px; /* Match new mobile navbar height */
+    height: calc(100vh - 64px);
+    padding: 20px;
   }
 }

@@ -2,9 +2,11 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-color: #f8f9fa; /* Warna background abu-abu sangat muda agar bersih */
-  font-family: Arial, Helvetica, sans-serif;
+  /* Rely on global background from index.css */
+  font-family: var(--font-body);
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .layout {
@@ -13,40 +15,49 @@
   margin: 0 auto;
   padding: 0 20px;
   box-sizing: border-box;
+  animation: slideUp 0.6s ease-out forwards;
 }
 
 .mainSection {
   text-align: center;
-  padding: 80px 20px 60px;
+  padding: 120px 20px 60px;
 }
 
 .title {
-  font-size: 3rem;
+  font-family: var(--font-heading);
+  font-size: 3.5rem;
   font-weight: 800;
-  color: #1a1a1a;
+  color: var(--text-main);
   margin-bottom: 20px;
   line-height: 1.2;
 }
 
 .highlight {
-  color: #0a0a23;
+  color: transparent;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
   text-decoration: underline;
-  text-decoration-color: #0a0a23; 
+  text-decoration-color: var(--primary);
 }
 
 .subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-muted);
   max-width: 700px;
   margin: 0 auto;
   line-height: 1.6;
 }
 
 .storySection {
-  background-color: #0a0a23;
-  color: white;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  color: var(--text-main);
   padding: 80px 40px;
-  border-radius: 20px;
+  border-radius: 24px;
   margin-bottom: 80px;
   text-align: center;
 }
@@ -57,28 +68,39 @@
 }
 
 .storyContent h2 {
+  font-family: var(--font-heading);
   font-size: 2.5rem;
   margin-bottom: 30px;
+  color: var(--primary);
 }
 
 .storyContent p {
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   line-height: 1.8;
   margin-bottom: 20px;
-  opacity: 0.9;
+  color: var(--text-muted);
+}
+
+.storyContent strong {
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+@keyframes slideUp {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
 @media (max-width: 768px) {
   .title {
-    font-size: 2rem;
-  }
-  
-  .cardContainer {
-    flex-direction: column;
-    align-items: center;
+    font-size: 2.5rem;
   }
   
   .storySection {
     padding: 50px 20px;
+  }
+  
+  .storyContent h2 {
+    font-size: 2rem;
   }
 }

@@ -1,5 +1,5 @@
 .container {
-  padding: 5px 5px; 
+  padding: 10px; 
   width: 100%;
   box-sizing: border-box;
 }
@@ -11,14 +11,15 @@
 
 .topRegionSection {
   margin-top: 20px;
-  font-family: sans-serif;
+  font-family: var(--font-body);
 }
 
 .sectionTitle {
+  font-family: var(--font-heading);
   font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
-  color: #000;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: var(--text-main);
 }
 
 .listContainer {
@@ -28,63 +29,84 @@
 }
 
 .listItem {
-  background-color: #E5E7EB;
-  padding: 15px 20px;
-  border-radius: 8px; 
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  padding: 16px 20px;
+  border-radius: 12px; 
   display: block; 
   font-weight: 500;
-  color: #333;
-  transition: 0.2s;
+  color: var(--text-main);
+  transition: var(--transition);
 }
 
 .listItemExpand {
-  background-color: #9ed8ff;
-  padding: 15px 20px;
-  border-radius: 8px; 
+  background: var(--bg-card-hover);
+  border: 1px solid var(--primary);
+  padding: 16px 20px;
+  border-radius: 12px; 
   font-weight: 500;
-  color: #333;
-  transition: 0.2s;
+  color: var(--primary);
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .listItem:hover {
-  background-color: #d1d5db;
+  background: var(--bg-card-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-.listHeader{
+.listHeader {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .count {
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.1rem;
+  color: var(--primary);
 }
 
 .seeMore {
   text-align: center;
-  margin-top: 20px;
+  margin-top: 24px;
 }
 
 .seeMore a {
-  color: #555;
+  color: var(--primary);
+  font-weight: 600;
   text-decoration: none;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  transition: var(--transition);
 }
 
-.listDetails{
-  background-color: #c1e5ff;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 5px;
+.seeMore a:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
 }
 
-.type{
+.listDetails {
+  background: rgba(37, 99, 235, 0.05);
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 8px;
+}
+
+.type {
   display: flex;
   justify-content: space-between;
-  padding: 5px 10px 5px 0;
-  border-bottom: 1px solid grey;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-color);
+  transition: var(--transition);
+  border-radius: 6px;
 }
 
-.type:hover{
-  background-color: #8eaabe;
+.type:last-child {
+  border-bottom: none;
+}
+
+.type:hover {
+  background: rgba(37, 99, 235, 0.1);
+  color: var(--primary);
 }

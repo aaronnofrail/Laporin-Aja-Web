@@ -1,6 +1,7 @@
 import styles from './header.module.css';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ThemeToggle from '../../component/ThemeToggle/ThemeToggle';
 
 function Header(){
     const [mobile,setMobile] = useState(false)
@@ -38,6 +39,7 @@ function Header(){
                 <Link to ="/account" className={styles.profile}>
                         <img src='/icons/user.png'/>
                 </Link>
+                <ThemeToggle />
 
             </div>
             <div id={styles.mobileMenu}>

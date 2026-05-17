@@ -21,6 +21,9 @@ function Navbar(){
                 <Navbar_option image='../../icons/border-heart.png' title='Disukai' url='/ViewProblems/Disukai'/>
                 <Navbar_option image='../../icons/Done.svg' title='Terkirim' url='/ViewProblems/Terkirim'/>
             </nav>
+            <div style={{ marginTop: 'auto', marginBottom: '20px', display: 'flex', justifyContent: 'center' }}>
+                
+            </div>
         </div>
     );
 }

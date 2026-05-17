@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import styles from "./account-page.module.css";
-import Header from "../../container/header/header";
 import { getAccountInfo , logout } from "../../hooks/manageAccount";
 
 function ProfilePage() {
@@ -25,10 +24,6 @@ function ProfilePage() {
 
   return (
     <div>
-      <div>
-        <Header/>
-      </div>
-
       <div className={styles.container}>
         <div className={styles.card}>
           <div style={{ marginBottom: "30px", textAlign: "left" }}>

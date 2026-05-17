@@ -1,28 +1,42 @@
-#container{
-    border: 1px solid grey;
-    border-radius: 3px;
-    padding: 10px;
-    margin: 10px;
+#container {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    padding: 16px;
+    margin: 10px 0;
     display: flex;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
-#cropperContainer{
-    width: 80% ;
+#cropperContainer {
+    width: 80%;
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-#buttonContainer{
+#buttonContainer {
     width: 20%;
-    padding-left: 10px;
+    padding-left: 16px;
 }
 
-#buttonContainer button{
-    background-color: rgb(83, 83, 83);
-    border-radius: 3px;
+#buttonContainer button {
+    background-color: var(--primary);
+    border-radius: 8px;
     outline: none;
-    border: 0;
+    border: none;
     display: block;
     width: 100%;
-    margin-bottom: 5px;
-    height: 30px;
-    color: aliceblue;
+    margin-bottom: 10px;
+    height: 36px;
+    color: white;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px var(--primary-glow);
+}
+
+#buttonContainer button:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
 }
