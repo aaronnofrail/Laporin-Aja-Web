@@ -46,6 +46,10 @@ app.use("/interract",interractRoutes)
 app.use("/delete",deleteRoute)
 app.use("/account",manageAccountRoute)
 
+app.get('/', (req, res) => {
+  res.send('Backend LaporinAja running successfully on Vercel!');
+});
+
 // Start server locally if run directly
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000;
