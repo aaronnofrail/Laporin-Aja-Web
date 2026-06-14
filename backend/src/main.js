@@ -19,7 +19,7 @@ app.use(cookieParser())
 //setup cors
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://laporin-aja-web.vercel.app"
+  "https://laporin-aja-nine.vercel.app"
 ];
 
 app.use(cors({
@@ -54,4 +54,4 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-export default app
+export default app;
