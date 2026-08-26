@@ -1,105 +1,78 @@
 import db from "../application/firestore.js";
 
-export const viewService = async (param,postId,province,type,forward) => {
-    console.log(postId, ' ' , province," ",type , ' ', param)
-    //ketika forward/backward salah satu dari postId dan filter undefined
-    //cek apakah param valid
-    const availableParamList = ['Newest','Oldest','Likes','Province','Type','Search']
-    if(!availableParamList.includes(param)){
-        return [] //kalau param failed
+export const viewService = async (param, postId, province, type, forward) => {
+    console.log(postId, ' ', province, " ", type, ' ', param);
+    const availableParamList = ['Newest', 'Oldest', 'Likes', 'Province', 'Type', 'Search'];
+    if (!availableParamList.includes(param)) {
+        return { content: [], totalPost: 0 };
     }
 
-    let snapshot = null
+    try {
+        let allDocs = [];
 
-    if(postId == null || postId == undefined){
-        //load pertama kali
-        console.log('load pertama')
-        switch(param){
-            case 'Newest':
-                snapshot = await db.collection('reports').orderBy('date','desc').limit(5).get()
-                break
-            case 'Oldest':
-                snapshot = await db.collection('reports').orderBy('date','asc').limit(5).get()
-                break
-            case 'Likes':
-                snapshot = await db.collection('reports').orderBy('likes','desc').orderBy('date','desc').limit(5).get()
-                break
-            case 'Province':
-                snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','desc').limit(5).get()
-                break
-            case 'Type':
-                snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').limit(5).get()
-                break
-            case 'Search':
-                snapshot = await db.collection('reports').get()
-                break
-        }
-    }else{
-        console.log('load kedua')
-        const x = await db.collection('reports').where('id','==',postId).limit(1).get()
-        const cursor = x.docs[0]
+        if (param === 'Newest') {
+            const snap = await db.collection('reports').orderBy('date', 'desc').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+        } else if (param === 'Oldest') {
+            const snap = await db.collection('reports').orderBy('date', 'asc').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+        } else if (param === 'Likes') {
+            try {
+                const snap = await db.collection('reports').orderBy('likes', 'desc').orderBy('date', 'desc').get();
+                snap.forEach(doc => allDocs.push(doc.data()));
+            } catch (e) {
+                const snap = await db.collection('reports').orderBy('likes', 'desc').get();
+                snap.forEach(doc => allDocs.push(doc.data()));
+            }
+        } else if (param === 'Province') {
+            const targetProv = province || 'Provinsi Aceh';
+            const snap = await db.collection('reports').where('provinsi', '==', targetProv).get();
+            snap.forEach(doc => allDocs.push(doc.data()));
 
-        //load berdasarkan cursor
-        if(forward){
-            switch(param){
-                case 'Newest':
-                    snapshot = await db.collection('reports').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Oldest':
-                    snapshot = await db.collection('reports').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Likes':   
-                    snapshot = await db.collection('reports').orderBy('likes','desc').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Province':   
-                    snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Type':
-                    snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Search':
-                    snapshot = await db.collection('reports').get()
-                    break
-            }            
+            // Smart filter: if type is also specified and matching reports exist, use them
+            if (type) {
+                const filteredByType = allDocs.filter(d => d.jenis_pengaduan === type);
+                if (filteredByType.length > 0) {
+                    allDocs = filteredByType;
+                }
             }
-        }else{
-            switch(param){
-                case 'Newest':
-                    snapshot = await db.collection('reports').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Oldest':
-                    snapshot = await db.collection('reports').orderBy('date','desc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Likes':
-                    snapshot = await db.collection('reports').orderBy('likes','asc').orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Province':   
-                    snapshot = await db.collection('reports').where('provinsi','==',province).orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
-                case 'Type':
-                    snapshot = await db.collection('reports').where('jenis_pengaduan','==',type).orderBy('date','asc').startAfter(cursor).limit(5).get()
-                    break
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
+        } else if (param === 'Type') {
+            const targetType = type || 'Infrastruktur dan Fasilitas';
+            const snap = await db.collection('reports').where('jenis_pengaduan', '==', targetType).get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+
+            // Smart filter: if province is also specified and matching reports exist, use them
+            if (province) {
+                const filteredByProv = allDocs.filter(d => d.provinsi === province);
+                if (filteredByProv.length > 0) {
+                    allDocs = filteredByProv;
+                }
             }
-            //snapshot = await db.collection('reports').orderBy('date','asc').startAfter(date).limit(5).get()
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
+        } else if (param === 'Search') {
+            const snap = await db.collection('reports').get();
+            snap.forEach(doc => allDocs.push(doc.data()));
+            allDocs.sort((a, b) => (b.date || 0) - (a.date || 0));
         }
+
+        const totalPost = allDocs.length;
+        let startIndex = 0;
+
+        if (postId) {
+            const foundIdx = allDocs.findIndex(d => d.id === postId);
+            if (foundIdx !== -1) {
+                startIndex = forward !== false ? foundIdx + 1 : Math.max(0, foundIdx - 5);
+            }
+        }
+
+        const content = allDocs.slice(startIndex, startIndex + 5);
+        return { content, totalPost };
+    } catch (err) {
+        console.error("View service query error:", err.message);
+        return { content: [], totalPost: 0 };
     }
-
-    //jadikan 1 array
-    const result = []
-    console.log(forward)
-    snapshot.forEach(doc => {
-        if(forward){
-            result.push(doc.data())
-        }else{
-            result.unshift(doc.data())
-        }
-    })
-
-    //ambil jumlah total postingan
-    const len = await db.collection('reports').count().get()
-    const total = len.data().count
-    return {content:result,totalPost:total}
-}
+};
 
 export const getLikesService = async(username,postId,forward)=>{
     const account = await db.collection('accounts').where('username','==',username).limit(1).get()
